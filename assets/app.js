@@ -177,14 +177,14 @@
     }
   };
 
-  const renderLessons = (lessons) => {
+    const renderLessons = (lessons) => {
     const grid = document.querySelector("#lessonGrid");
     if (!grid) return;
     const liked = readJson(STORAGE_KEYS.liked, {});
     grid.innerHTML = lessons
       .map((lesson) => {
         const disabled = liked[lesson.id] ? "disabled" : "";
-        const buttonLabel = liked[lesson.id] ? "พึงพอใจแล้ว" : "พึงพอใจ";
+        const likedClass = liked[lesson.id] ? "is-liked" : "";
         return `
           <article class="lesson-card">
             <a class="lesson-card__media" href="${escapeHtml(lesson.url)}" target="_blank" rel="noopener">
@@ -194,9 +194,9 @@
               <a class="lesson-card__title" href="${escapeHtml(lesson.url)}" target="_blank" rel="noopener">
                 <h3>${escapeHtml(lesson.title)}</h3>
               </a>
-              <button class="satisfaction-button" type="button" data-like="${lesson.id}" ${disabled}>
+              <button class="satisfaction-button ${likedClass}" type="button" data-like="${lesson.id}" ${disabled}>
                 <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21.4 10.6 20C5.4 15.3 2 12.2 2 8.4A5.4 5.4 0 0 1 7.5 3c1.8 0 3.5.8 4.5 2.1A5.7 5.7 0 0 1 16.5 3 5.4 5.4 0 0 1 22 8.4c0 3.8-3.4 6.9-8.6 11.6L12 21.4Z"/></svg>
-                <span>${buttonLabel} ${lesson.likes}</span>
+                <span>${lesson.likes}</span>
               </button>
             </div>
           </article>
@@ -206,7 +206,6 @@
     document.querySelector("#lessonCount").textContent = String(lessons.length);
     document.querySelector("#likeTotal").textContent = String(lessons.reduce((sum, item) => sum + item.likes, 0));
   };
-
   const initMainPage = async () => {
     const lessons = await getLessons();
     renderLessons(lessons);
