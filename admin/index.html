@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f2ea">
+    <title>Admin | Nakae Dole E-Learning</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <script defer src="../assets/app.js"></script>
+    <script defer src="../assets/admin.js"></script>
+  </head>
+  <body data-page="admin">
+    <header class="site-header">
+      <a class="brand" href="../" aria-label="กลับหน้าเว็บหลัก">
+        <img class="brand__logo" src="https://img2.pic.in.th/.5767ec9fdaa5699b.png" alt="โลโก้ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก">
+        <span class="brand__text">
+          <span>Nakae Dole E-Learning</span>
+          <small>Admin Dashboard</small>
+        </span>
+      </a>
+      <nav class="top-actions" aria-label="เมนูผู้ดูแล">
+        <a class="ghost-link" href="../">หน้าเว็บหลัก</a>
+        <button id="logoutButton" class="icon-link hidden" type="button" aria-label="ออกจากระบบ">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M15.5 3.5a1 1 0 0 1 1-1h3a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2h-3a1 1 0 1 1 0-2h3v-15h-3a1 1 0 0 1-1-1Zm-5.2 4.2a1 1 0 0 1 1.4-1.4l5 5a1 1 0 0 1 0 1.4l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H3.5a1 1 0 1 1 0-2h10.1l-3.3-3.3Z"/>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="loginPanel" class="login-panel">
+        <div>
+          <p class="eyebrow">Private Area</p>
+          <h1>Admin Dashboard</h1>
+          <p>จัดการบทเรียนออนไลน์และติดตามข้อเสนอแนะของผู้เรียน</p>
+        </div>
+        <form id="loginForm" class="login-form">
+          <label>
+            <span>รหัสผ่าน</span>
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-button" type="submit">เข้าสู่ระบบ</button>
+          <p id="loginStatus" class="form-status" role="status"></p>
+        </form>
+      </section>
+
+      <section id="adminDashboard" class="admin-dashboard hidden" aria-label="แผงควบคุมผู้ดูแล">
+        <div class="dashboard-header">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h1>จัดการชุดการเรียนรู้</h1>
+          </div>
+          <button id="refreshButton" class="secondary-button" type="button">รีเฟรชข้อมูล</button>
+        </div>
+
+        <div class="admin-grid">
+          <section class="admin-panel" aria-labelledby="addLessonTitle">
+            <h2 id="addLessonTitle">เพิ่มบทเรียนออนไลน์</h2>
+            <form id="lessonForm" class="stacked-form">
+              <label>
+                <span>ชื่อบทเรียนออนไลน์</span>
+                <input name="title" type="text" maxlength="140" required>
+              </label>
+              <label>
+                <span>ลิงก์ระบบเรียนออนไลน์</span>
+                <input name="url" type="url" placeholder="https://..." required>
+              </label>
+              <label>
+                <span>ลิงก์ภาพบทเรียน</span>
+                <input id="imageUrlInput" name="image" type="url" placeholder="https://...">
+              </label>
+              <button class="primary-button" type="submit">เพิ่มผลงาน</button>
+              <p id="lessonStatus" class="form-status" role="status"></p>
+            </form>
+          </section>
+
+          <section class="admin-panel" aria-labelledby="uploadTitle">
+            <h2 id="uploadTitle">อัปโหลดภาพไป pic.in.th</h2>
+            <form id="uploadForm" class="stacked-form">
+              <label>
+                <span>Pic.in.th API key</span>
+                <input id="picApiKey" name="apiKey" type="password" autocomplete="off" placeholder="เก็บไว้เฉพาะเบราว์เซอร์นี้">
+              </label>
+              <label class="checkbox-line">
+                <input id="rememberKey" type="checkbox" checked>
+                <span>จำ API key ในเครื่องนี้</span>
+              </label>
+              <label>
+                <span>ไฟล์ภาพ</span>
+                <input name="image" type="file" accept="image/*" required>
+              </label>
+              <button class="secondary-button" type="submit">อัปโหลดภาพ</button>
+              <p id="uploadStatus" class="form-status" role="status"></p>
+            </form>
+          </section>
+        </div>
+
+        <section class="admin-panel wide-panel" aria-labelledby="lessonListTitle">
+          <h2 id="lessonListTitle">รายการบทเรียน</h2>
+          <div id="adminLessons" class="admin-list"></div>
+        </section>
+
+        <section class="admin-panel wide-panel" aria-labelledby="feedbackListTitle">
+          <div class="panel-heading-row">
+            <h2 id="feedbackListTitle">ข้อความข้อเสนอแนะ</h2>
+            <div class="pager">
+              <button id="prevFeedback" class="icon-link" type="button" aria-label="หน้าก่อนหน้า">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15.7 5.3a1 1 0 0 1 0 1.4L10.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0Z"/></svg>
+              </button>
+              <span id="feedbackPageLabel">1 / 1</span>
+              <button id="nextFeedback" class="icon-link" type="button" aria-label="หน้าถัดไป">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8.3 18.7a1 1 0 0 1 0-1.4l5.3-5.3-5.3-5.3a1 1 0 0 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="feedbackList" class="feedback-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>ระบบ ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก</p>
+      <p>Nakae To Share</p>
+    </footer>
+  </body>
+</html>

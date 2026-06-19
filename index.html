@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f2ea">
+    <title>Nakae Dole E-Learning</title>
+    <meta
+      name="description"
+      content="Nakae Dole E-Learning ชุดการเรียนรู้ในรูปแบบ E-Learning โดย ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก"
+    >
+    <link rel="stylesheet" href="./assets/styles.css">
+    <script defer src="./assets/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Nakae Dole E-Learning">
+        <img class="brand__logo" src="https://img2.pic.in.th/.5767ec9fdaa5699b.png" alt="โลโก้ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก">
+        <span class="brand__text">
+          <span>Nakae Dole E-Learning</span>
+          <small>ชุดการเรียนรู้ในรูปแบบ E-Learning โดย ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก</small>
+        </span>
+      </a>
+      <nav class="top-actions" aria-label="เมนูหลัก">
+        <a class="ghost-link" href="#feedback">ข้อเสนอแนะ</a>
+        <a class="icon-link" href="./admin/" aria-label="เข้าสู่ระบบผู้ดูแล">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M12 2a5 5 0 0 1 5 5v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1V7a5 5 0 0 1 5-5Zm3 8V7a3 3 0 1 0-6 0v3h6Z"/>
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก</p>
+          <h1>Nakae Dole E-Learning</h1>
+          <p>
+            ชุดการเรียนรู้ออนไลน์ที่รวบรวมบทเรียน ผลงาน และสื่อการเรียนรู้ไว้ในพื้นที่เดียว
+            โดย ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก เพื่อให้ผู้เรียนเข้าถึงได้ง่ายจากทุกอุปกรณ์
+          </p>
+        </div>
+        <div class="hero__panel" aria-label="ภาพรวมระบบ">
+          <div class="metric">
+            <strong id="lessonCount">0</strong>
+            <span>บทเรียน</span>
+          </div>
+          <div class="metric">
+            <strong id="likeTotal">0</strong>
+            <span>ความพึงพอใจ</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="lessonsTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Learning Board</p>
+          <h2 id="lessonsTitle">ผลงานและบทเรียนออนไลน์</h2>
+        </div>
+        <div id="lessonGrid" class="lesson-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="feedback-section" id="feedback" aria-labelledby="feedbackTitle">
+        <div>
+          <p class="eyebrow">Feedback</p>
+          <h2 id="feedbackTitle">ข้อเสนอแนะ</h2>
+          <p>ทุกข้อความจะถูกส่งถึงผู้ดูแลระบบเพื่อนำไปปรับปรุงชุดการเรียนรู้</p>
+        </div>
+        <form id="feedbackForm" class="feedback-form">
+          <label>
+            <span>ชื่อผู้เสนอแนะ</span>
+            <input name="name" type="text" maxlength="80" placeholder="ไม่บังคับ">
+          </label>
+          <label>
+            <span>ข้อความ</span>
+            <textarea name="message" rows="5" maxlength="1000" required placeholder="พิมพ์ข้อเสนอแนะ"></textarea>
+          </label>
+          <button class="primary-button" type="submit">ส่งข้อเสนอแนะ</button>
+          <p id="feedbackStatus" class="form-status" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>ระบบ ศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอนาแก</p>
+      <p>Nakae To Share</p>
+    </footer>
+  </body>
+</html>

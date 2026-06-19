@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nakae Dole E-Learning</title>
+    <script>
+      const path = window.location.pathname.replace(/\/+$/, "");
+      if (path.endsWith("/admin")) {
+        window.location.replace("./admin/");
+      } else {
+        window.location.replace("./");
+      }
+    </script>
+  </head>
+  <body>
+    <a href="./">Nakae Dole E-Learning</a>
+  </body>
+</html>
