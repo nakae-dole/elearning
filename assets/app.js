@@ -1,5 +1,5 @@
 (() => {
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwqcwrcYkXZlsA5zPHvFphLGCkECNhgmSt2aeHUCSmuiWvbx4ItNUpu_1m2AeOQqNlW/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwypQUXdZOZ1__Hjl9KZwH8L65Hp-PJE1Hu9a_hTneOhS8oXHbwNOK_cZJWNvU6zc56/exec";
   const STORAGE_KEYS = {
     lessons: "nakae_lessons_v1",
     feedback: "nakae_feedback_v1",
@@ -93,7 +93,7 @@
         return remoteLessons;
       }
     } catch {
-      // Static fallback keeps GitHub Pages usable even before the Apps Script is deployed.
+      // Static fallback
     }
     return (localLessons || defaultLessons).map(normalizeLesson);
   };
@@ -141,7 +141,7 @@
         return remoteFeedback;
       }
     } catch {
-      // Local fallback for file previews and early GitHub Pages testing.
+      // Static fallback
     }
     return localFeedback.map(normalizeFeedback);
   };
