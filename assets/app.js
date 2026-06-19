@@ -1,5 +1,5 @@
 (() => {
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbxiphsB7IiVTjeBq2D8ONlvat0yWdJfKGBDH8S4elohZIT0djoEJXST4o4fEhE2Crmn/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbx0cjxI9LdOLk_sgiK1FzQONZZXuun9WAJ8yUE4cMoaWI1XOlg8KWiCfF_P6xiIYSs/exec";
   const STORAGE_KEYS = {
     lessons: "nakae_lessons_v1",
     feedback: "nakae_feedback_v1",
