@@ -1,6 +1,6 @@
 (() => {
   // วาง URL ของ Google Apps Script ที่ได้จากการ Deploy ล่าสุดตรงนี้ครับ
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbx0cjxI9LdOLk_sgiK1FzQONZZXuun9WAJ8yUE4cMoaWI1XOlg8KWiCfF_P6xiIYSs/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbx8MFmOTKuipHVbqG3qAQmmFYdu4jQAyjyTIDG7MvTdvRMBaplmlOM_67HJTJMr3qdb/exec";
   const STORAGE_KEYS = {
     lessons: "nakae_lessons_v1",
     feedback: "nakae_feedback_v1",
