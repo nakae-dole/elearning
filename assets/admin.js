@@ -86,13 +86,14 @@
       .join("");
   };
 
+  // ----- FIX: แก้ไขวิธีอัปโหลดภาพเพื่อหลีกเลี่ยง CORS Error -----
   const uploadToPic = async (apiKey, file) => {
     const body = new FormData();
     body.append("source", file);
+    body.append("key", apiKey); // ส่ง key ไปใน body แทน header
     const response = await fetch("https://pic.in.th/api/1/upload", {
       method: "POST",
-      headers: { "X-API-Key": apiKey },
-      body
+      body // ไม่ใส่ header X-API-Key เพื่อเลี่ยง OPTIONS Preflight
     });
     const data = await response.json();
     if (!response.ok || data.status_code >= 400) {
@@ -106,6 +107,7 @@
       data.url
     );
   };
+  // -------------------------------------------------------------
 
   document.querySelector("#loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
