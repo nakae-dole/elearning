@@ -393,11 +393,21 @@ h2 {
   transform: scale(1.2);
 }
 
-.satisfaction-button:disabled {
-  color: var(--muted);
-  border-color: var(--line);
-  background: #f8fafc;
+.satisfaction-button:disabled, .satisfaction-button.is-liked {
+  color: var(--rose);
+  border-color: var(--rose-light);
+  background: var(--rose-light);
   cursor: default;
+}
+
+.satisfaction-button.is-liked svg {
+  animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
 }
 
 /* Forms */
