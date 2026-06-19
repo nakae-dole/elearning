@@ -1,6 +1,7 @@
 (() => {
   const ADMIN_PASSWORD = "admin0";
-  const PIC_API_KEY = "nakae_pic_api_key_v1";
+  // ฝัง API Key ลงในโค้ดเลยตามที่ผู้ใช้ต้องการ
+  const HARDCODED_PIC_API_KEY = "chv_1t5c_7329b0dbbf291216cce38dbe57bfe8a6f99152ea968e559b857bb25cb556c6a5_a85b485c8109b0986994d2461f94f2058117981bc5eda36eabc4e27e7c967947";
   const FEEDBACK_PAGE_SIZE = 8;
 
   let lessons = [];
@@ -86,12 +87,11 @@
       .join("");
   };
 
-  // ----- FIX: แก้ปัญหา Failed to fetch (CORS) -----
   const uploadToPic = async (apiKey, file) => {
     const body = new FormData();
     body.append("source", file);
     
-    // วิ่งผ่าน CORS Proxy เพือให้ส่ง Header ข้ามโดเมนได้เหมือนโปรแกรม curl
+    // วิ่งผ่าน CORS Proxy เพือให้ส่ง Header ข้ามโดเมนได้
     const response = await fetch("https://corsproxy.io/?https://pic.in.th/api/1/upload", {
       method: "POST",
       headers: { "X-API-Key": apiKey },
@@ -110,7 +110,6 @@
       data.url
     );
   };
-  // ----------------------------------------------
 
   document.querySelector("#loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -155,24 +154,17 @@
     event.preventDefault();
     const form = event.currentTarget;
     const status = document.querySelector("#uploadStatus");
-    const apiKey = document.querySelector("#picApiKey").value.trim();
-    const remember = document.querySelector("#rememberKey").checked;
     const file = new FormData(form).get("image");
 
-    if (!apiKey) {
-      store.setStatus(status, "กรุณาใส่ API key", "error");
+    if (!file || file.size === 0) {
+      store.setStatus(status, "กรุณาเลือกไฟล์ภาพ", "error");
       return;
-    }
-
-    if (remember) {
-      localStorage.setItem(PIC_API_KEY, apiKey);
-    } else {
-      localStorage.removeItem(PIC_API_KEY);
     }
 
     try {
       store.setStatus(status, "กำลังอัปโหลดภาพ...");
-      const imageUrl = await uploadToPic(apiKey, file);
+      // ใช้ API Key ที่ฝังไว้ในโค้ด
+      const imageUrl = await uploadToPic(HARDCODED_PIC_API_KEY, file);
       document.querySelector("#imageUrlInput").value = imageUrl;
       store.setStatus(status, "อัปโหลดสำเร็จและเติมลิงก์ภาพให้แล้ว", "success");
       form.querySelector('input[type="file"]').value = "";
@@ -191,9 +183,16 @@
     renderFeedback();
   });
 
-  const savedKey = localStorage.getItem(PIC_API_KEY);
-  if (savedKey) {
-    document.querySelector("#picApiKey").value = savedKey;
+  // ซ่อนช่องกรอก API Key เพื่อไม่ให้ครูที่ใช้งานสับสน
+  const apiKeyInput = document.querySelector("#picApiKey");
+  if (apiKeyInput) {
+    const parentLabel = apiKeyInput.closest("label");
+    if (parentLabel) parentLabel.style.display = "none";
+  }
+  const rememberKey = document.querySelector("#rememberKey");
+  if (rememberKey) {
+    const parentCheckbox = rememberKey.closest(".checkbox-line");
+    if (parentCheckbox) parentCheckbox.style.display = "none";
   }
 
   if (isLoggedIn()) {
