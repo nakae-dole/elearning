@@ -86,15 +86,18 @@
       .join("");
   };
 
-  // ----- FIX: แก้ไขวิธีอัปโหลดภาพเพื่อหลีกเลี่ยง CORS Error -----
+  // ----- FIX: แก้ปัญหา Failed to fetch (CORS) -----
   const uploadToPic = async (apiKey, file) => {
     const body = new FormData();
     body.append("source", file);
-    body.append("key", apiKey); // ส่ง key ไปใน body แทน header
-    const response = await fetch("https://pic.in.th/api/1/upload", {
+    
+    // วิ่งผ่าน CORS Proxy เพือให้ส่ง Header ข้ามโดเมนได้เหมือนโปรแกรม curl
+    const response = await fetch("https://corsproxy.io/?https://pic.in.th/api/1/upload", {
       method: "POST",
-      body // ไม่ใส่ header X-API-Key เพื่อเลี่ยง OPTIONS Preflight
+      headers: { "X-API-Key": apiKey },
+      body
     });
+    
     const data = await response.json();
     if (!response.ok || data.status_code >= 400) {
       throw new Error(data.error?.message || data.message || "Upload failed");
@@ -107,7 +110,7 @@
       data.url
     );
   };
-  // -------------------------------------------------------------
+  // ----------------------------------------------
 
   document.querySelector("#loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
