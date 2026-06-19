@@ -1,4 +1,5 @@
 (() => {
+  // วาง URL ของ Google Apps Script ที่ได้จากการ Deploy ล่าสุดตรงนี้ครับ
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx0cjxI9LdOLk_sgiK1FzQONZZXuun9WAJ8yUE4cMoaWI1XOlg8KWiCfF_P6xiIYSs/exec";
   const STORAGE_KEYS = {
     lessons: "nakae_lessons_v1",
@@ -87,8 +88,9 @@
     const localLessons = readJson(STORAGE_KEYS.lessons, null);
     try {
       const data = await postToGas("listLessons");
-      const remoteLessons = Array.isArray(data.lessons) ? data.lessons.map(normalizeLesson) : [];
-      if (remoteLessons.length > 0) {
+      // FIX: ยอมรับข้อมูลถึงแม้จะเป็น Array เปล่าๆ (0 บทเรียน) เพื่อเคลียร์ cache
+      if (Array.isArray(data.lessons)) {
+        const remoteLessons = data.lessons.map(normalizeLesson);
         writeJson(STORAGE_KEYS.lessons, remoteLessons);
         return remoteLessons;
       }
@@ -135,8 +137,8 @@
     const localFeedback = readJson(STORAGE_KEYS.feedback, []);
     try {
       const data = await postToGas("listFeedback");
-      const remoteFeedback = Array.isArray(data.feedback) ? data.feedback.map(normalizeFeedback) : [];
-      if (remoteFeedback.length > 0) {
+      if (Array.isArray(data.feedback)) {
+        const remoteFeedback = data.feedback.map(normalizeFeedback);
         writeJson(STORAGE_KEYS.feedback, remoteFeedback);
         return remoteFeedback;
       }
